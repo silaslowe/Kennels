@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react"
 import { EmployeeContext, EmployeeProvider } from "./EmployeeProvider"
 import { Employee } from "./Employee"
 import "./Employee.css"
-import { directive } from "@babel/types"
 
 export const EmployeeList = () => {
   const { employees, getEmployees } = useContext(EmployeeContext)

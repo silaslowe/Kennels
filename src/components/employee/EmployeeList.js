@@ -10,7 +10,7 @@ export const EmployeeList = () => {
   useEffect(() => {
     console.log("Employee: Initial render")
     getEmployees()
-  })
+  }, [])
   return (
     <div className="employees">
       {employees.map((employee) => (

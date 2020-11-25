@@ -110,6 +110,7 @@ export const EmployeeForm = (props) => {
         onClick={(ev) => {
           ev.preventDefault()
           constructNewEmployee()
+          props.history.push("/employees/create")
         }}
         className="btn btn-primary"
       >

@@ -63,7 +63,7 @@ export const EmployeeForm = (props) => {
             required
             autoFocus
             className="form-control"
-            placeholder="Employee name"
+            placeholder="Employee Name"
           />
         </div>
       </fieldset>
@@ -75,7 +75,7 @@ export const EmployeeForm = (props) => {
             name="location"
             ref={location}
             id="employeeLocation"
-            className="form-controll"
+            className="form-control"
           >
             <option value="0">Select a Location</option>
             {locations.map((e) => (

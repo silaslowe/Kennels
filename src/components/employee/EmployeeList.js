@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react"
 import { EmployeeContext, EmployeeProvider } from "./EmployeeProvider"
 import { Employee } from "./Employee"
+import { Link } from "react-router-dom"
 import "./Employees.css"
 
 export const EmployeeList = (props) => {
@@ -10,15 +11,21 @@ export const EmployeeList = (props) => {
     console.log("Employee: Initial render")
     getEmployees()
   }, [])
+
   return (
     <div className="employees">
       <h1>Employees</h1>
 
       <button onClick={() => props.history.push("employees/create")}>Add Employee</button>
-
-      {employees.map((employee) => (
-        <Employee key={employee.id} employee={employee} />
-      ))}
+      <article className="employeeList">
+        {employees.map((employee) => {
+          return (
+            <Link key={employee.id} to={`/employees/${employee.id}`}>
+              <h3>{employee.name}</h3>
+            </Link>
+          )
+        })}
+      </article>
     </div>
   )
 }

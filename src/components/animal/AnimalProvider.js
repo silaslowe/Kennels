@@ -26,3 +26,9 @@ export const AnimalProvider = (props) => {
     </AnimalContext.Provider>
   )
 }
+
+const getAnimalById = (id) => {
+  return fetch(
+    `http://localhost:8088/animals/${id}?_expand=location&_expand=customer`
+  ).then((res) => res.json())
+}

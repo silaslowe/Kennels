@@ -88,7 +88,7 @@ export const EmployeeForm = (props) => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="location">Caretaker for: </label>
+          <label htmlFor="animal">Caretaker for: </label>
           <select
             defaultValue=""
             name="animal"

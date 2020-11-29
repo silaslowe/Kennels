@@ -3,9 +3,10 @@ import { Route } from "react-router-dom"
 import { LocationProvider } from "./location/LocationProvider"
 import { LocationList } from "./location/LocationList"
 import { LocationDetail } from "./location/LocationDetail"
-import { AnimalContext, AnimalProvider } from "./animal/AnimalProvider"
+import { AnimalProvider } from "./animal/AnimalProvider"
 import { AnimalList } from "./animal/AnimalList"
 import { AnimalForm } from "./animal/AnimalForm"
+import { AnimalDetails } from "./animal/AnimalDetails"
 import { EmployeeProvider } from "./employee/EmployeeProvider"
 import { EmployeeList } from "./employee/EmployeeList"
 import { EmployeeForm } from "./employee/EmployeeForm"
@@ -33,11 +34,15 @@ export const ApplicationViews = (props) => {
       {/* Animal */}
       <AnimalProvider>
         <LocationProvider>
-          <CustomerProvider>
-            <Route path="/animals" render={(props) => <AnimalList {...props} />} />
+          <EmployeeProvider>
+            <Route exact path="/animals" render={(props) => <AnimalList {...props} />} />
 
             <Route path="/animals/create" render={(props) => <AnimalForm {...props} />} />
-          </CustomerProvider>
+            <Route
+              path="/animals/:animalId(\d+)"
+              render={(props) => <AnimalDetails {...props} />}
+            />
+          </EmployeeProvider>
         </LocationProvider>
       </AnimalProvider>
 

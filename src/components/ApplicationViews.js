@@ -6,6 +6,7 @@ import { LocationDetail } from "./location/LocationDetail"
 import { AnimalProvider } from "./animal/AnimalProvider"
 import { AnimalList } from "./animal/AnimalList"
 import { AnimalForm } from "./animal/AnimalForm"
+import { AnimalSearch } from "./animal/AnimalSearch"
 import { AnimalDetails } from "./animal/AnimalDetails"
 import { EmployeeProvider } from "./employee/EmployeeProvider"
 import { EmployeeList } from "./employee/EmployeeList"
@@ -35,7 +36,18 @@ export const ApplicationViews = (props) => {
       <AnimalProvider>
         <LocationProvider>
           <EmployeeProvider>
-            <Route exact path="/animals" render={(props) => <AnimalList {...props} />} />
+            <Route
+              exact
+              path="/animals"
+              render={(props) => {
+                return (
+                  <>
+                    <AnimalSearch />
+                    <AnimalList {...props} />
+                  </>
+                )
+              }}
+            />
 
             <Route path="/animals/create" render={(props) => <AnimalForm {...props} />} />
             <Route
@@ -71,4 +83,3 @@ export const ApplicationViews = (props) => {
     </>
   )
 }
-console.log(localStorage)

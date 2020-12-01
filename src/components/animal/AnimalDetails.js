@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { AnimalContext } from "./AnimalProvider"
 
 export const AnimalDetails = (props) => {
-  const { releaseAnimal, getAnimalById } = useContext(AnimalContext)
+  const { animals, releaseAnimal, getAnimalById } = useContext(AnimalContext)
 
   const [animal, setAnimal] = useState({ location: {}, customer: {} })
 
@@ -10,7 +10,6 @@ export const AnimalDetails = (props) => {
     const animalId = parseInt(props.match.params.animalId)
     getAnimalById(animalId).then(setAnimal)
   }, [])
-  console.log("ANIMALID", animal)
 
   return (
     <section className="animal">
@@ -20,7 +19,8 @@ export const AnimalDetails = (props) => {
       <div className="animal__owner">Customer: {animal.customer.name}</div>
       <button
         onClick={() => {
-          releaseAnimal(animal).then(() => {
+          console.log(animal)
+          releaseAnimal(animal.id).then(() => {
             props.history.push("/animals")
           })
         }}

@@ -83,4 +83,3 @@ export const ApplicationViews = (props) => {
     </>
   )
 }
-console.log(localStorage)

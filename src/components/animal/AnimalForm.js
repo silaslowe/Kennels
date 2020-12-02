@@ -1,85 +1,107 @@
-import React, { useContext, useRef, useEffect } from "react"
-import { AnimalContext, AnimalProvider } from "./AnimalProvider"
+import React, { useContext, useState, useEffect } from "react"
+import { AnimalContext } from "./AnimalProvider"
 import { LocationContext } from "../location/LocationProvider"
 
 export const AnimalForm = (props) => {
-  const { addAnimal } = useContext(AnimalContext)
   const { locations, getLocations } = useContext(LocationContext)
+  const { addAnimal, animals, updateAnimal, getAnimals } = useContext(AnimalContext)
 
-  const name = useRef(null)
-  const breed = useRef(null)
-  const location = useRef(null)
+  const [animal, setAnimal] = useState({})
 
+  const editMode = props.match.params.hasOwnProperty("animalId")
+
+  const handleControlledInputChange = (e) => {
+    const newAnimal = Object.assign({}, animal)
+    newAnimal[e.target.name] = e.target.value
+    setAnimal(newAnimal)
+  }
+  const getAnimalInEditMode = () => {
+    if (editMode) {
+      const animalId = parseInt(props.match.params.animalId)
+      const selectedAnimal = animals.find((a) => a.id === animalId) || {}
+      setAnimal(selectedAnimal)
+    }
+  }
   useEffect(() => {
+    getAnimals()
     getLocations()
   }, [])
 
-  const constructNewAnimal = () => {
-    /*
-            The `location` and `animal` variables below are
-            the references attached to the input fields. You
-            can't just ask for the `.value` property directly,
-            but rather `.current.value` now in React.
-        */
-    const locationId = parseInt(location.current.value)
-    const customerId = parseInt(localStorage.kennel_customer)
+  useEffect(() => {
+    getAnimalInEditMode()
+  }, [animals])
 
+  const constructNewAnimal = () => {
+    const locationId = parseInt(animal.locationId)
+    console.log("in construct", animal.locationId)
     if (locationId === 0) {
       window.alert("Please select a location")
     } else {
-      addAnimal({
-        name: name.current.value,
-        breed: breed.current.value,
-        locationId,
-        customerId,
-      }).then(() => props.history.push("/animals"))
+      if (editMode) {
+        updateAnimal({
+          id: animal.id,
+          name: animal.name,
+          breed: animal.breed,
+          locationId: locationId,
+          treatment: animal.treatment,
+          customerId: parseInt(localStorage.getItem("kennel_customer")),
+        }).then(() => props.history.push("/animals"))
+      } else {
+        addAnimal({
+          name: animal.name,
+          breed: animal.breed,
+          locationId: locationId,
+          treatment: animal.treatment,
+          customerId: parseInt(localStorage.getItem("kennel_customer")),
+        }).then(() => props.history.push("/animals"))
+      }
     }
   }
   return (
     <form className="animalForm">
-      <h2 className="animalForm__title">New Animal</h2>
-      {/* Name */}
+      <h2 className="animalForm__title">{editMode ? "Update Animal" : "Admit Animal"}</h2>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalName">Animal Name: </label>
+          <label htmlFor="name">Animal Name:</label>
           <input
             type="text"
-            id="animalName"
-            ref={name}
+            name="name"
             required
             autoFocus
             className="form-control"
+            prototype="varchar"
             placeholder="Animal Name"
+            defaultValue={animal.name}
+            onChange={handleControlledInputChange}
           />
         </div>
       </fieldset>
-      {/* Breed */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalBreed">Animal Breed: </label>
+          <label htmlFor="breed">Animal breed: </label>
           <input
             type="text"
-            id="animalBreed"
-            ref={breed}
+            name="breed"
             required
-            autoFocus
             className="form-control"
-            placeholder="Animal Breed"
+            proptype="varchar"
+            placeholder="Animal breed"
+            defaultValue={animal.breed}
+            onChange={handleControlledInputChange}
           />
         </div>
       </fieldset>
-      {/* Location */}
       <fieldset>
         <div className="form-group">
-          <label htmlFor="location">Assign to Location</label>
+          <label htmlFor="locationId">Location: </label>
           <select
-            defaultValue=""
-            name="location"
-            ref={location}
-            id="animalLocation"
+            name="locationId"
             className="form-control"
+            proptype="int"
+            value={animal.locationId}
+            onChange={handleControlledInputChange}
           >
-            <option value="0">Select a Location</option>
+            <option value="0">Select a location</option>
             {locations.map((e) => (
               <option key={e.id} value={e.id}>
                 {e.name}
@@ -88,16 +110,28 @@ export const AnimalForm = (props) => {
           </select>
         </div>
       </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="treatment">Treatments: </label>
+          <textarea
+            type="text"
+            name="treatment"
+            className="form-control"
+            proptype="varchar"
+            value={animal.treatment}
+            onChange={handleControlledInputChange}
+          ></textarea>
+        </div>
+      </fieldset>
       <button
         type="submit"
-        onClick={(ev) => {
-          ev.preventDefault()
+        onClick={(evt) => {
+          evt.preventDefault()
           constructNewAnimal()
-          props.history.push("/animals/create")
         }}
         className="btn btn-primary"
       >
-        Save Animal
+        {editMode ? "Save Updates" : "Make Reservation"}
       </button>
     </form>
   )

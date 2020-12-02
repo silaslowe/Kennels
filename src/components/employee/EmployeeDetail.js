@@ -6,7 +6,7 @@ import { EmployeeContext } from "./EmployeeProvider"
 export const EmployeeDetail = (props) => {
   const { animals, getAnimals } = useContext(AnimalContext)
   const { locations, getLocations } = useContext(LocationContext)
-  const { employees, getEmployees } = useContext(EmployeeContext)
+  const { employees, getEmployees, removeEmployee } = useContext(EmployeeContext)
 
   const [animal, setAnimal] = useState([])
   const [employee, setEmployee] = useState([])
@@ -39,6 +39,15 @@ export const EmployeeDetail = (props) => {
           ? "Not assigned to an animal"
           : `Currently taking care of ${animal.name}`}
       </div>
+      <button
+        onClick={() => {
+          removeEmployee(employee.id).then(() => {
+            props.history.push("/employees")
+          })
+        }}
+      >
+        Remove
+      </button>
     </section>
   )
 }

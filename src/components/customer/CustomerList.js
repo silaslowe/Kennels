@@ -13,9 +13,7 @@ export const CustomerList = () => {
 
   return (
     <div className="customers">
-      {customers.map((customer) => (
-        <Customer key={customer.id} customer={customer} />
-      ))}
+      {customers.map((customer) => <Customer key={customer.id} customer={customer} />).sort()}
     </div>
   )
 }

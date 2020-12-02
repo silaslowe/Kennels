@@ -36,6 +36,7 @@ export const ApplicationViews = (props) => {
       <AnimalProvider>
         <LocationProvider>
           <EmployeeProvider>
+            {/* Animal Seach/List */}
             <Route
               exact
               path="/animals"
@@ -49,11 +50,20 @@ export const ApplicationViews = (props) => {
               }}
             />
 
+            {/* Animal Adder */}
+
             <Route path="/animals/create" render={(props) => <AnimalForm {...props} />} />
+
+            {/* Animal Solo */}
+
             <Route
               path="/animals/:animalId(\d+)"
               render={(props) => <AnimalDetails {...props} />}
             />
+
+            {/* Animal Edit */}
+
+            <Route path="/animals/:animalId(\d+)" render={(props) => <AnimalForm {...props} />} />
           </EmployeeProvider>
         </LocationProvider>
       </AnimalProvider>

@@ -8,7 +8,6 @@ export const EmployeeList = (props) => {
   const { employees, getEmployees } = useContext(EmployeeContext)
 
   useEffect(() => {
-    console.log("Employee: Initial render")
     getEmployees()
   }, [])
 
@@ -17,7 +16,6 @@ export const EmployeeList = (props) => {
       <h1>Employees</h1>
 
       <button onClick={() => props.history.push("employees/create")}>Add Employee</button>
-      {console.log(props.history)}
       <article className="employeeList">
         {employees.map((employee) => {
           return (

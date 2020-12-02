@@ -63,7 +63,10 @@ export const ApplicationViews = (props) => {
 
             {/* Animal Edit */}
 
-            <Route path="/animals/:animalId(\d+)" render={(props) => <AnimalForm {...props} />} />
+            <Route
+              path="/animals/edit/:animalId(\d+)"
+              render={(props) => <AnimalForm {...props} />}
+            />
           </EmployeeProvider>
         </LocationProvider>
       </AnimalProvider>

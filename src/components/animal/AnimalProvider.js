@@ -50,6 +50,7 @@ export const AnimalProvider = (props) => {
         addAnimal,
         getAnimals,
         searchTerms,
+        updateAnimal,
         releaseAnimal,
         getAnimalById,
         setSearchTerms,
